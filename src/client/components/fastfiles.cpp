@@ -20,7 +20,7 @@ namespace fastfiles
 	public:
 		void start_hooks() override
 		{
-			db_try_load_x_file_internal_hook.create(REBASE(0x141425010), &db_try_load_x_file_internal);
+			db_try_load_x_file_internal_hook.create(REBASE(0x141425010), &db_try_load_x_file_internal); //updated
 		}
 
 		void destroy_hooks() override

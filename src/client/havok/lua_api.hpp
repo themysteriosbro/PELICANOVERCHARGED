@@ -5,25 +5,24 @@
 #define LUA_REGISTRYINDEX	(-10000)
 #define LUA_ENVIRONINDEX	(-10001)
 #define LUA_GLOBALSINDEX	(-10002)
-
+#define OFFSET(address) (uintptr_t)((address - 0x140000000) + (uintptr_t)GetModuleHandle(NULL))
 namespace lua
 {
-	WEAK game::symbol<void(lua_State* s, int narg, const char* extramsg)> luaL_argerror{ (uintptr_t)GetModuleHandle(NULL) + 0x1D4CE50 };
-	WEAK game::symbol<int (lua_State* s, long nargs, long nresults)> lua_pcall{ (uintptr_t)GetModuleHandle(NULL) + 0x1D53E40 };
-	WEAK game::symbol<void(lua_State* s, int index, const char* k)> lua_setfield{ (uintptr_t)GetModuleHandle(NULL) + 0x1429680 };
-	WEAK game::symbol<const void*  (lua_State* s, int index)> lua_topointer{ (uintptr_t)GetModuleHandle(NULL) + 0x1D4F020 };
-	WEAK game::symbol<int (lua_State* s, int index)> lua_toboolean{ (uintptr_t)GetModuleHandle(NULL) + 0x14373D0 };
-	WEAK game::symbol<hksUint64 (lua_State* s, int index)> lua_toui64{ (uintptr_t)GetModuleHandle(NULL) + 0x1D4C8A0 };
-	WEAK game::symbol<void (lua_State* s, const char* str, size_t l)> lua_pushlstring{ (uintptr_t)GetModuleHandle(NULL) + 0xA18430 };
-	WEAK game::symbol<const char* (lua_State* s, int idx, const char* fname, int szhint)> luaL_findtable{ (uintptr_t)GetModuleHandle(NULL) + 0x1D530E0 };
-	WEAK game::symbol<const char* (lua_State* s, const char* str)> lua_pushstring{ (uintptr_t)GetModuleHandle(NULL) + 0xA186B0 };
+	WEAK game::symbol<void(lua_State* s, int narg, const char* extramsg)> luaL_argerror{ OFFSET(0x141D4CE50) }; //updated
+	WEAK game::symbol<int (lua_State* s, long nargs, long nresults)> lua_pcall{ OFFSET(0x141D53DB0) }; //updated
+	WEAK game::symbol<void(lua_State* s, int index, const char* k)> lua_setfield{ OFFSET(0x141429680) }; //updated
+	WEAK game::symbol<const void*  (lua_State* s, int index)> lua_topointer{ OFFSET(0x141D4EF90) }; //updated
+	WEAK game::symbol<int (lua_State* s, int index)> lua_toboolean{ OFFSET(0x1414373D0) };
+	WEAK game::symbol<hksUint64 (lua_State* s, int index)> lua_toui64{ OFFSET(0x141D4C8A0) }; //updated
+	WEAK game::symbol<void (lua_State* s, const char* str, size_t l)> lua_pushlstring{ OFFSET(0x140A18430) }; //updated
+	WEAK game::symbol<const char* (lua_State* s, int idx, const char* fname, int szhint)> luaL_findtable{ OFFSET(0x141D53050) }; //updated
+	WEAK game::symbol<const char* (lua_State* s, const char* str)> lua_pushstring{ OFFSET(0x140A186B0) }; //updated
+	WEAK game::symbol<int (lua_State* s, const char* fmt, ...)> luaL_error{ OFFSET(0x141D52FC0) }; //updated
 
-	//WEAK game::symbol<void* (lua_State* s, int narg, const char* tname)> lua_pushstring{ (uintptr_t)GetModuleHandle(NULL) + 0x1D52F50 };
-	WEAK game::symbol<int (lua_State* s, const char* fmt, ...)> luaL_error{ (uintptr_t)GetModuleHandle(NULL) + 0x1D53050 };
+	WEAK game::symbol<int(lua_State* s, int index)> lua_isnumber{ OFFSET(0x141429350) }; //updated
 
-	WEAK game::symbol<int(lua_State* s, int index)> lua_isnumber{ (uintptr_t)GetModuleHandle(NULL) + 0x1429350 };
-
-	WEAK game::symbol<__int64 (const char* key, const char* value, lua_State* luaVM)> Lua_SetTableString{ (uintptr_t)GetModuleHandle(NULL) + 0x32534688 };
+	//guessing this is not needed since we never use it
+	//WEAK game::symbol<__int64 (const char* key, const char* value, lua_State* luaVM)> Lua_SetTableString{ (uintptr_t)GetModuleHandle(NULL) + 0x32534688 }; 
 
 	void luaL_register(lua_State* s, const char* libname, const luaL_Reg* l);
 	void lua_setglobal(lua_State* s, const char* k);
